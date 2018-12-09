@@ -39,7 +39,7 @@ func NewServer() (*Server, error) {
 		KvAPI:      k,
 		BackupAPI:  &b,
 		AuthToken:  auth.Token,
-		Authorizer: nil, //auth.Request,
+		Authorizer: auth.Request,
 		Logger:     log.Printf,
 	})
 	if err != nil {
