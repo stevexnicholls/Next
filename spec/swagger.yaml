@@ -23,7 +23,7 @@ securityDefinitions:
   token:
     type: apiKey
     in: header
-    name: Cookie
+    name: x-api-key
 
 security:
   - token: []

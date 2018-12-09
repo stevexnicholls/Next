@@ -56,7 +56,7 @@ type Config struct {
 	// and the principal was stored in the context in the "AuthKey" context value.
 	Authorizer func(*http.Request) error
 
-	// AuthToken Applies when the "Cookie" header is set
+	// AuthToken Applies when the "x-api-key" header is set
 	AuthToken func(token string) (interface{}, error)
 }
 

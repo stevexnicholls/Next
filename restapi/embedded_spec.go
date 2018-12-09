@@ -244,7 +244,7 @@ func init() {
   "securityDefinitions": {
     "token": {
       "type": "apiKey",
-      "name": "Cookie",
+      "name": "x-api-key",
       "in": "header"
     }
   },
@@ -519,7 +519,7 @@ func init() {
   "securityDefinitions": {
     "token": {
       "type": "apiKey",
-      "name": "Cookie",
+      "name": "x-api-key",
       "in": "header"
     }
   },
