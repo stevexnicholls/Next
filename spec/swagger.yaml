@@ -70,8 +70,8 @@ paths:
           $ref: '#/responses/ErrorNotFound'
         default:
           $ref: '#/responses/ErrorResponse'
-      security:
-        - token: [admin]
+      # security:
+      #   - token: [admin]
 
   /kv/{key}:
 

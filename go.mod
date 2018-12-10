@@ -15,7 +15,9 @@ require (
 	github.com/mitchellh/go-homedir v1.0.0
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/viper v1.3.1
+	github.com/stretchr/testify v1.2.2
 	github.com/tylerb/graceful v1.2.15 // indirect
+	github.com/vektra/mockery v0.0.0-20181123154057-e78b021dcbb5 // indirect
 	go.etcd.io/bbolt v1.3.0
 	golang.org/x/net v0.0.0-20181207154023-610586996380
 )
