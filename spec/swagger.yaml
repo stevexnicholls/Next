@@ -8,7 +8,7 @@ info:
     name: Apache 2.0
     url: https://github.com/stevexnicholls/next/blob/master/LICENSE
   title: Next
-  version: 0.0.1
+  version: 0.1.0
 
 schemes: [http]
 produces: [application/json]
@@ -18,6 +18,10 @@ basePath: /api
 tags:
   - name: kv
     description: key value
+  - name: backup
+    description: db backup
+  - name: health
+    description: api health
 
 securityDefinitions:
   token:
@@ -29,7 +33,21 @@ security:
   - token: []
 
 paths:
-  /kv:
+  /health:
+
+    get:
+      tags: [health]
+      responses:
+        200:
+          description: "confirm that the service is healthy"
+        default:
+          description: "generic error response"
+          schema:
+            $ref: '#/responses/ErrorResponse'
+      tags:
+        - health
+
+  /v1alpha/kv:
 
     get:
       tags: [kv]
@@ -73,7 +91,7 @@ paths:
       # security:
       #   - token: [admin]
 
-  /kv/{key}:
+  /v1alpha/kv/{key}:
 
     parameters:
       - $ref: '#/parameters/Key'
@@ -144,7 +162,7 @@ paths:
         default:
           $ref: '#/responses/ErrorResponse'
 
-  /backup:
+  /v1alpha/backup:
   
     get:
       tags: [backup]

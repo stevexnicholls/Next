@@ -12,6 +12,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/stevexnicholls/next/client/backup"
+	"github.com/stevexnicholls/next/client/health"
 	"github.com/stevexnicholls/next/client/kv"
 )
 
@@ -59,6 +60,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Next {
 	cli.Transport = transport
 
 	cli.Backup = backup.New(transport, formats)
+
+	cli.Health = health.New(transport, formats)
 
 	cli.Kv = kv.New(transport, formats)
 
@@ -108,6 +111,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Next struct {
 	Backup *backup.Client
 
+	Health *health.Client
+
 	Kv *kv.Client
 
 	Transport runtime.ClientTransport
@@ -118,6 +123,8 @@ func (c *Next) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.Backup.SetTransport(transport)
+
+	c.Health.SetTransport(transport)
 
 	c.Kv.SetTransport(transport)
 

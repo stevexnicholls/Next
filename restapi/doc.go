@@ -9,7 +9,7 @@ Next is a simple single node store for retrieving key/value information
       http
     Host: localhost
     BasePath: /api
-    Version: 0.0.1
+    Version: 0.1.0
     License: Apache 2.0 https://github.com/stevexnicholls/next/blob/master/LICENSE
     Contact: Steve Nicholls<stevexnicholls@gmail.com>
 

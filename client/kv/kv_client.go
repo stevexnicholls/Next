@@ -36,7 +36,7 @@ func (a *Client) KeyDelete(params *KeyDeleteParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "KeyDelete",
 		Method:             "DELETE",
-		PathPattern:        "/kv/{key}",
+		PathPattern:        "/v1alpha/kv/{key}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -65,7 +65,7 @@ func (a *Client) KeyList(params *KeyListParams, authInfo runtime.ClientAuthInfoW
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "KeyList",
 		Method:             "GET",
-		PathPattern:        "/kv",
+		PathPattern:        "/v1alpha/kv",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -94,7 +94,7 @@ func (a *Client) ValueGet(params *ValueGetParams, authInfo runtime.ClientAuthInf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ValueGet",
 		Method:             "GET",
-		PathPattern:        "/kv/{key}",
+		PathPattern:        "/v1alpha/kv/{key}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -123,7 +123,7 @@ func (a *Client) ValueUpdate(params *ValueUpdateParams, authInfo runtime.ClientA
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ValueUpdate",
 		Method:             "PUT",
-		PathPattern:        "/kv",
+		PathPattern:        "/v1alpha/kv",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

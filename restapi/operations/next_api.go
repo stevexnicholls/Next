@@ -20,6 +20,7 @@ import (
 	"github.com/go-openapi/swag"
 
 	"github.com/stevexnicholls/next/restapi/operations/backup"
+	"github.com/stevexnicholls/next/restapi/operations/health"
 	"github.com/stevexnicholls/next/restapi/operations/kv"
 )
 
@@ -43,6 +44,9 @@ func NewNextAPI(spec *loads.Document) *NextAPI {
 		BinProducer:         runtime.ByteStreamProducer(),
 		BackupBackupGetHandler: backup.BackupGetHandlerFunc(func(params backup.BackupGetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackupBackupGet has not yet been implemented")
+		}),
+		HealthGetHealthHandler: health.GetHealthHandlerFunc(func(params health.GetHealthParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation HealthGetHealth has not yet been implemented")
 		}),
 		KvKeyDeleteHandler: kv.KeyDeleteHandlerFunc(func(params kv.KeyDeleteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation KvKeyDelete has not yet been implemented")
@@ -106,6 +110,8 @@ type NextAPI struct {
 
 	// BackupBackupGetHandler sets the operation handler for the backup get operation
 	BackupBackupGetHandler backup.BackupGetHandler
+	// HealthGetHealthHandler sets the operation handler for the get health operation
+	HealthGetHealthHandler health.GetHealthHandler
 	// KvKeyDeleteHandler sets the operation handler for the key delete operation
 	KvKeyDeleteHandler kv.KeyDeleteHandler
 	// KvKeyListHandler sets the operation handler for the key list operation
@@ -187,6 +193,10 @@ func (o *NextAPI) Validate() error {
 
 	if o.BackupBackupGetHandler == nil {
 		unregistered = append(unregistered, "backup.BackupGetHandler")
+	}
+
+	if o.HealthGetHealthHandler == nil {
+		unregistered = append(unregistered, "health.GetHealthHandler")
 	}
 
 	if o.KvKeyDeleteHandler == nil {
@@ -319,27 +329,32 @@ func (o *NextAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/backup"] = backup.NewBackupGet(o.context, o.BackupBackupGetHandler)
+	o.handlers["GET"]["/v1alpha/backup"] = backup.NewBackupGet(o.context, o.BackupBackupGetHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/health"] = health.NewGetHealth(o.context, o.HealthGetHealthHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/kv/{key}"] = kv.NewKeyDelete(o.context, o.KvKeyDeleteHandler)
+	o.handlers["DELETE"]["/v1alpha/kv/{key}"] = kv.NewKeyDelete(o.context, o.KvKeyDeleteHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/kv"] = kv.NewKeyList(o.context, o.KvKeyListHandler)
+	o.handlers["GET"]["/v1alpha/kv"] = kv.NewKeyList(o.context, o.KvKeyListHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/kv/{key}"] = kv.NewValueGet(o.context, o.KvValueGetHandler)
+	o.handlers["GET"]["/v1alpha/kv/{key}"] = kv.NewValueGet(o.context, o.KvValueGetHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/kv"] = kv.NewValueUpdate(o.context, o.KvValueUpdateHandler)
+	o.handlers["PUT"]["/v1alpha/kv"] = kv.NewValueUpdate(o.context, o.KvValueUpdateHandler)
 
 }
 

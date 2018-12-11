@@ -64,7 +64,7 @@ type BackupGetOK struct {
 }
 
 func (o *BackupGetOK) Error() string {
-	return fmt.Sprintf("[GET /backup][%d] backupGetOK ", 200)
+	return fmt.Sprintf("[GET /v1alpha/backup][%d] backupGetOK ", 200)
 }
 
 func (o *BackupGetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -86,7 +86,7 @@ type BackupGetNotFound struct {
 }
 
 func (o *BackupGetNotFound) Error() string {
-	return fmt.Sprintf("[GET /backup][%d] backupGetNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/backup][%d] backupGetNotFound  %+v", 404, o.Payload)
 }
 
 func (o *BackupGetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -124,7 +124,7 @@ func (o *BackupGetDefault) Code() int {
 }
 
 func (o *BackupGetDefault) Error() string {
-	return fmt.Sprintf("[GET /backup][%d] BackupGet default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/backup][%d] BackupGet default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *BackupGetDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

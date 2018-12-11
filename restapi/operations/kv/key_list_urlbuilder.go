@@ -35,7 +35,7 @@ func (o *KeyListURL) SetBasePath(bp string) {
 func (o *KeyListURL) Build() (*url.URL, error) {
 	var result url.URL
 
-	var _path = "/kv"
+	var _path = "/v1alpha/kv"
 
 	_basePath := o._basePath
 	if _basePath == "" {

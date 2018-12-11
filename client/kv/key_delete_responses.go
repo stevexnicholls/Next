@@ -64,7 +64,7 @@ type KeyDeleteNoContent struct {
 }
 
 func (o *KeyDeleteNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /kv/{key}][%d] keyDeleteNoContent ", 204)
+	return fmt.Sprintf("[DELETE /v1alpha/kv/{key}][%d] keyDeleteNoContent ", 204)
 }
 
 func (o *KeyDeleteNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -86,7 +86,7 @@ type KeyDeleteNotFound struct {
 }
 
 func (o *KeyDeleteNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /kv/{key}][%d] keyDeleteNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /v1alpha/kv/{key}][%d] keyDeleteNotFound  %+v", 404, o.Payload)
 }
 
 func (o *KeyDeleteNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -124,7 +124,7 @@ func (o *KeyDeleteDefault) Code() int {
 }
 
 func (o *KeyDeleteDefault) Error() string {
-	return fmt.Sprintf("[DELETE /kv/{key}][%d] KeyDelete default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /v1alpha/kv/{key}][%d] KeyDelete default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *KeyDeleteDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

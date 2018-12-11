@@ -29,7 +29,7 @@ func NewKeyDelete(ctx *middleware.Context, handler KeyDeleteHandler) *KeyDelete 
 	return &KeyDelete{Context: ctx, Handler: handler}
 }
 
-/*KeyDelete swagger:route DELETE /kv/{key} kv keyDelete
+/*KeyDelete swagger:route DELETE /v1alpha/kv/{key} kv keyDelete
 
 Delete an existing key
 

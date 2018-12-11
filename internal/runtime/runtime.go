@@ -7,7 +7,7 @@ import (
 
 // NewRuntime creates a new application level runtime that encapsulates the shared services for this application
 func NewRuntime() (*Runtime, error) {
-	db, err := persist.NewBoltStore(viper.GetString("store_path"), viper.GetString("store_bucket"))
+	db, err := persist.NewBoltStore(viper.GetString("db_path"), viper.GetString("db_bucket"))
 	if err != nil {
 		return nil, err
 	}

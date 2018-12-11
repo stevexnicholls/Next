@@ -29,7 +29,7 @@ func NewValueGet(ctx *middleware.Context, handler ValueGetHandler) *ValueGet {
 	return &ValueGet{Context: ctx, Handler: handler}
 }
 
-/*ValueGet swagger:route GET /kv/{key} kv valueGet
+/*ValueGet swagger:route GET /v1alpha/kv/{key} kv valueGet
 
 Get a value
 

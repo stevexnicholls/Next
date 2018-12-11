@@ -58,7 +58,7 @@ type KeyListOK struct {
 }
 
 func (o *KeyListOK) Error() string {
-	return fmt.Sprintf("[GET /kv][%d] keyListOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/kv][%d] keyListOK  %+v", 200, o.Payload)
 }
 
 func (o *KeyListOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -94,7 +94,7 @@ func (o *KeyListDefault) Code() int {
 }
 
 func (o *KeyListDefault) Error() string {
-	return fmt.Sprintf("[GET /kv][%d] KeyList default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/kv][%d] KeyList default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *KeyListDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

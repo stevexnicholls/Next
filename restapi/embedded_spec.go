@@ -39,11 +39,29 @@ func init() {
       "name": "Apache 2.0",
       "url": "https://github.com/stevexnicholls/next/blob/master/LICENSE"
     },
-    "version": "0.0.1"
+    "version": "0.1.0"
   },
   "basePath": "/api",
   "paths": {
-    "/backup": {
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "responses": {
+          "200": {
+            "description": "confirm that the service is healthy"
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/responses/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1alpha/backup": {
       "get": {
         "produces": [
           "application/octet-stream"
@@ -66,7 +84,7 @@ func init() {
         }
       }
     },
-    "/kv": {
+    "/v1alpha/kv": {
       "get": {
         "description": "Lists all the keys",
         "tags": [
@@ -89,13 +107,6 @@ func init() {
         }
       },
       "put": {
-        "security": [
-          {
-            "token": [
-              "admin"
-            ]
-          }
-        ],
         "tags": [
           "kv"
         ],
@@ -127,7 +138,7 @@ func init() {
         }
       }
     },
-    "/kv/{key}": {
+    "/v1alpha/kv/{key}": {
       "get": {
         "tags": [
           "kv"
@@ -257,6 +268,14 @@ func init() {
     {
       "description": "key value",
       "name": "kv"
+    },
+    {
+      "description": "db backup",
+      "name": "backup"
+    },
+    {
+      "description": "api health",
+      "name": "health"
     }
   ]
 }`))
@@ -282,11 +301,32 @@ func init() {
       "name": "Apache 2.0",
       "url": "https://github.com/stevexnicholls/next/blob/master/LICENSE"
     },
-    "version": "0.0.1"
+    "version": "0.1.0"
   },
   "basePath": "/api",
   "paths": {
-    "/backup": {
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "responses": {
+          "200": {
+            "description": "confirm that the service is healthy"
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1alpha/backup": {
       "get": {
         "produces": [
           "application/octet-stream"
@@ -315,7 +355,7 @@ func init() {
         }
       }
     },
-    "/kv": {
+    "/v1alpha/kv": {
       "get": {
         "description": "Lists all the keys",
         "tags": [
@@ -341,13 +381,6 @@ func init() {
         }
       },
       "put": {
-        "security": [
-          {
-            "token": [
-              "admin"
-            ]
-          }
-        ],
         "tags": [
           "kv"
         ],
@@ -385,7 +418,7 @@ func init() {
         }
       }
     },
-    "/kv/{key}": {
+    "/v1alpha/kv/{key}": {
       "get": {
         "tags": [
           "kv"
@@ -532,6 +565,14 @@ func init() {
     {
       "description": "key value",
       "name": "kv"
+    },
+    {
+      "description": "db backup",
+      "name": "backup"
+    },
+    {
+      "description": "api health",
+      "name": "health"
     }
   ]
 }`))

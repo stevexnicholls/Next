@@ -40,7 +40,7 @@ func (o *KeyDeleteURL) SetBasePath(bp string) {
 func (o *KeyDeleteURL) Build() (*url.URL, error) {
 	var result url.URL
 
-	var _path = "/kv/{key}"
+	var _path = "/v1alpha/kv/{key}"
 
 	key := o.Key
 	if key != "" {

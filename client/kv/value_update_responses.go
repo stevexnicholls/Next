@@ -65,7 +65,7 @@ type ValueUpdateCreated struct {
 }
 
 func (o *ValueUpdateCreated) Error() string {
-	return fmt.Sprintf("[PUT /kv][%d] valueUpdateCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[PUT /v1alpha/kv][%d] valueUpdateCreated  %+v", 201, o.Payload)
 }
 
 func (o *ValueUpdateCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -94,7 +94,7 @@ type ValueUpdateNotFound struct {
 }
 
 func (o *ValueUpdateNotFound) Error() string {
-	return fmt.Sprintf("[PUT /kv][%d] valueUpdateNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /v1alpha/kv][%d] valueUpdateNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ValueUpdateNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -132,7 +132,7 @@ func (o *ValueUpdateDefault) Code() int {
 }
 
 func (o *ValueUpdateDefault) Error() string {
-	return fmt.Sprintf("[PUT /kv][%d] ValueUpdate default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PUT /v1alpha/kv][%d] ValueUpdate default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ValueUpdateDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

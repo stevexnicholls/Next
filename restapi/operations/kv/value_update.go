@@ -29,7 +29,7 @@ func NewValueUpdate(ctx *middleware.Context, handler ValueUpdateHandler) *ValueU
 	return &ValueUpdate{Context: ctx, Handler: handler}
 }
 
-/*ValueUpdate swagger:route PUT /kv kv valueUpdate
+/*ValueUpdate swagger:route PUT /v1alpha/kv kv valueUpdate
 
 Update value
 

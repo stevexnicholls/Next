@@ -35,7 +35,7 @@ func (o *BackupGetURL) SetBasePath(bp string) {
 func (o *BackupGetURL) Build() (*url.URL, error) {
 	var result url.URL
 
-	var _path = "/backup"
+	var _path = "/v1alpha/backup"
 
 	_basePath := o._basePath
 	if _basePath == "" {

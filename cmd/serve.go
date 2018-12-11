@@ -42,17 +42,17 @@ func init() {
 	rootCmd.AddCommand(serveCmd)
 
 	serveCmd.PersistentFlags().StringVarP(&port, "port", "p", "localhost:3000", "port to listen on")
-	serveCmd.PersistentFlags().StringVar(&storePath, "store_path", "", "path to store db file")
-	serveCmd.PersistentFlags().StringVar(&storeBucket, "store_bucket", "", "name of bucket in db")
+	serveCmd.PersistentFlags().StringVar(&storePath, "db_path", "", "path to store db file")
+	serveCmd.PersistentFlags().StringVar(&storeBucket, "db_bucket", "", "name of bucket in db")
 	serveCmd.PersistentFlags().StringVar(&apiKey, "api_key", "", "api key")
 
 	viper.BindPFlag("port", serveCmd.PersistentFlags().Lookup("port"))
-	viper.BindPFlag("store_path", serveCmd.PersistentFlags().Lookup("store_path"))
-	viper.BindPFlag("store_bucket", serveCmd.PersistentFlags().Lookup("store_bucket"))
+	viper.BindPFlag("db_path", serveCmd.PersistentFlags().Lookup("db_path"))
+	viper.BindPFlag("db_bucket", serveCmd.PersistentFlags().Lookup("db_bucket"))
 	viper.BindPFlag("api_key", serveCmd.PersistentFlags().Lookup("api_key"))
 
 	viper.SetDefault("port", "localhost:3000")
-	viper.SetDefault("store_path", "./data.db")
-	viper.SetDefault("store_bucket", "bucket")
+	viper.SetDefault("db_path", "./data.db")
+	viper.SetDefault("db_bucket", "bucket")
 	viper.SetDefault("api_key", "")
 }

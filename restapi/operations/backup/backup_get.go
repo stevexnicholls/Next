@@ -29,7 +29,7 @@ func NewBackupGet(ctx *middleware.Context, handler BackupGetHandler) *BackupGet 
 	return &BackupGet{Context: ctx, Handler: handler}
 }
 
-/*BackupGet swagger:route GET /backup backup backupGet
+/*BackupGet swagger:route GET /v1alpha/backup backup backupGet
 
 Get a copy of the store
 

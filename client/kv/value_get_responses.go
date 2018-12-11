@@ -65,7 +65,7 @@ type ValueGetOK struct {
 }
 
 func (o *ValueGetOK) Error() string {
-	return fmt.Sprintf("[GET /kv/{key}][%d] valueGetOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/kv/{key}][%d] valueGetOK  %+v", 200, o.Payload)
 }
 
 func (o *ValueGetOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -94,7 +94,7 @@ type ValueGetNotFound struct {
 }
 
 func (o *ValueGetNotFound) Error() string {
-	return fmt.Sprintf("[GET /kv/{key}][%d] valueGetNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/kv/{key}][%d] valueGetNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ValueGetNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -132,7 +132,7 @@ func (o *ValueGetDefault) Code() int {
 }
 
 func (o *ValueGetDefault) Error() string {
-	return fmt.Sprintf("[GET /kv/{key}][%d] ValueGet default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /v1alpha/kv/{key}][%d] ValueGet default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ValueGetDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
