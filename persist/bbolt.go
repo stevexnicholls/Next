@@ -12,7 +12,7 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
-// NewBoltStore creates a new store backed by goleveldb
+// NewBoltStore creates a new store backed by bbolt db
 func NewBoltStore(p string, b string) (Store, error) {
 
 	db, err := bolt.Open(p, 0666, nil)
