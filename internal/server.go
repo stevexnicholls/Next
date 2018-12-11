@@ -77,7 +77,7 @@ func (srv *Server) Start() {
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	sig := <-quit
-	log.Infof("Shutting down server... Reason:", sig)
+	log.Infof("Shutting down server... Reason: %s", sig)
 	// teardown logic...
 
 	if err := srv.srv.Shutdown(context.Background()); err != nil {

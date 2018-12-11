@@ -9,6 +9,6 @@ import (
 
 type Health struct{}
 
-func (*Health) HealthGet(ctx context.Context, params health.GetHealthParams) middleware.Responder {
-	return health.NewGetHealthOK()
+func (*Health) HealthGet(ctx context.Context, params health.HealthGetParams) middleware.Responder {
+	return health.NewHealthGetOK()
 }
