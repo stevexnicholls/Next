@@ -3,7 +3,6 @@ package kv
 import (
 	"context"
 	"encoding/binary"
-	"log"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
@@ -11,6 +10,7 @@ import (
 	"github.com/stevexnicholls/next/models"
 	"github.com/stevexnicholls/next/persist"
 	"github.com/stevexnicholls/next/restapi/operations/kv"
+	log "github.com/stevexnicholls/next/logger"
 )
 
 type Kv struct {
@@ -30,14 +30,14 @@ func (k *Kv) ValueGet(ctx context.Context, params kv.ValueGetParams) middleware.
 	c, err := k.rt.DB().Get(key)
 
 	if err != nil {
-		log.Println(swag.String(err.Error()))
+		log.Info(swag.String(err.Error()))
 		if err == persist.ErrNotFound {
 			return kv.NewValueGetNotFound() //kv.NewGetEntryNotFound().WithPayload(modelsError(err))
 		}
 		return kv.NewValueGetDefault(0).WithPayload(modelsError(err))
 	}
 
-	log.Printf("Get key: %v value: %v", key, c.Value)
+	log.Infof("Get key: %v value: %v", key, c.Value)
 
 	return kv.NewValueGetOK().WithPayload(c)
 }

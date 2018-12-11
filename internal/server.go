@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,6 +13,7 @@ import (
 	"github.com/stevexnicholls/next/internal/kv"
 	"github.com/stevexnicholls/next/internal/runtime"
 	"github.com/stevexnicholls/next/restapi"
+	log "github.com/stevexnicholls/next/logger"
 )
 
 // Server provides an http.Server.
@@ -24,11 +24,11 @@ type Server struct {
 
 // NewServer creates and configures an APIServer serving all application routes.
 func NewServer() (*Server, error) {
-	log.Println("configuring server...")
+	log.Info("configuring server...")
 
 	rt, err := next.NewRuntime()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
 
 	k := kv.New(rt)
@@ -40,7 +40,7 @@ func NewServer() (*Server, error) {
 		BackupAPI:  &b,
 		AuthToken:  auth.Token,
 		Authorizer: auth.Request,
-		Logger:     log.Printf,
+		Logger:     log.Infof,
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -66,23 +66,23 @@ func NewServer() (*Server, error) {
 
 // Start runs ListenAndServe on the http.Server with graceful shutdown.
 func (srv *Server) Start() {
-	log.Println("starting server...")
+	log.Info("starting server...")
 	go func() {
 		if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
 			panic(err)
 		}
 	}()
-	log.Printf("Listening on %s\n", srv.srv.Addr)
+	log.Infof("Listening on %s\n", srv.srv.Addr)
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	sig := <-quit
-	log.Println("Shutting down server... Reason:", sig)
+	log.Infof("Shutting down server... Reason:", sig)
 	// teardown logic...
 
 	if err := srv.srv.Shutdown(context.Background()); err != nil {
 		panic(err)
 	}
 	srv.rt.Close()
-	log.Println("Server gracefully stopped")
+	log.Info("Server gracefully stopped")
 }

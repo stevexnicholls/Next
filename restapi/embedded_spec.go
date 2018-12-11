@@ -45,9 +45,11 @@ func init() {
   "paths": {
     "/health": {
       "get": {
+        "description": "get service health",
         "tags": [
           "health"
         ],
+        "operationId": "HealthGet",
         "responses": {
           "200": {
             "description": "confirm that the service is healthy"
@@ -307,9 +309,11 @@ func init() {
   "paths": {
     "/health": {
       "get": {
+        "description": "get service health",
         "tags": [
           "health"
         ],
+        "operationId": "HealthGet",
         "responses": {
           "200": {
             "description": "confirm that the service is healthy"

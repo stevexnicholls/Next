@@ -14,14 +14,12 @@ func NewRuntime() (*Runtime, error) {
 
 	return &Runtime{
 		db: db,
-		// cfg: cfg,
 	}, nil
 }
 
 // Runtime encapsulates the shared services for this application
 type Runtime struct {
 	db persist.Store
-	// cfg *viper.Viper
 }
 
 // DB returns the persistent store

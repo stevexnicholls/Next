@@ -37,6 +37,8 @@ paths:
 
     get:
       tags: [health]
+      description: get service health
+      operationId: HealthGet
       responses:
         200:
           description: "confirm that the service is healthy"
