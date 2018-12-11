@@ -1,0 +1,233 @@
+swagger: '2.0'
+info:
+  contact:
+    email: stevexnicholls@gmail.com 
+    name: Steve Nicholls
+  description: Next is a simple single node store for retrieving key/value information
+  license:
+    name: Apache 2.0
+    url: https://github.com/stevexnicholls/next/blob/master/LICENSE
+  title: Next
+  version: 0.1.0
+
+schemes: [http]
+produces: [application/json]
+consumes: [application/json]
+basePath: /api
+
+tags:
+  - name: kv
+    description: key value
+  - name: backup
+    description: db backup
+  - name: health
+    description: api health
+
+securityDefinitions:
+  token:
+    type: apiKey
+    in: header
+    name: x-api-key
+
+security:
+  - token: []
+
+paths:
+  /health:
+
+    get:
+      tags: [health]
+      responses:
+        200:
+          description: "confirm that the service is healthy"
+        default:
+          description: "generic error response"
+          schema:
+            $ref: '#/responses/ErrorResponse'
+      tags:
+        - health
+
+  /v1alpha/kv:
+
+    get:
+      tags: [kv]
+      description: Lists all the keys
+      operationId: KeyList
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/KeyValue'
+        default:
+          $ref: '#/responses/ErrorResponse'
+    put:
+      tags: [kv]
+      summary: Update value
+      operationId: ValueUpdate
+      parameters:
+        - name: keyvalue
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/KeyValue'
+            # properties:
+            #   value:
+            #     type: integer
+            #     format: int64
+            # type: string
+            # format: binary
+            # maxLength: 536870912
+      responses:
+        201:
+          description: Updated successfully
+          schema: 
+            $ref: '#/definitions/KeyValue'
+        404:
+          $ref: '#/responses/ErrorNotFound'
+        default:
+          $ref: '#/responses/ErrorResponse'
+      # security:
+      #   - token: [admin]
+
+  /v1alpha/kv/{key}:
+
+    parameters:
+      - $ref: '#/parameters/Key'
+    # put:
+    #   tags: [kv]
+    #   summary: Update value
+    #   operationId: ValueUpdate
+    #   parameters:
+    #     - name: value
+    #       in: body
+    #       required: true
+    #       schema:
+    #         type: object
+    #         properties:
+    #           value:
+    #             type: integer
+    #             format: int64
+    #         # type: string
+    #         # format: binary
+    #         # maxLength: 536870912
+    #   responses:
+    #     201:
+    #       description: Updated successfully
+    #       schema: 
+    #         $ref: '#/definitions/KeyValue'
+    #     404:
+    #       $ref: '#/responses/ErrorNotFound'
+    #     default:
+    #       $ref: '#/responses/ErrorResponse'
+    #   security:
+    #     - token: [admin]
+
+    get:
+      tags: [kv]
+      summary: Get a value
+      operationId: ValueGet
+      # parameters:
+      #   - name: key
+      #     in: path
+      #     description: Name of the key
+      #     required: true
+      #     type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KeyValue'
+        404:
+          $ref: '#/responses/ErrorNotFound'
+        default:
+          $ref: '#/responses/ErrorResponse'
+
+    delete:
+      tags: [kv]
+      summary: Delete an existing key
+      operationId: KeyDelete
+      # parameters:
+      #   - name: key
+      #     in: path
+      #     description: Name of the key
+      #     required: true
+      #     type: string
+      responses:
+        204:
+          description: Deleted successfully
+        404:
+          $ref: '#/responses/ErrorNotFound'
+        default:
+          $ref: '#/responses/ErrorResponse'
+
+  /v1alpha/backup:
+  
+    get:
+      tags: [backup]
+      operationId: BackupGet
+      summary: Get a copy of the store
+      produces:
+        - application/octet-stream
+      responses:
+        200:
+          description: Yay a backup
+        404:
+          $ref: '#/responses/ErrorNotFound'
+        default:
+          $ref: '#/responses/ErrorResponse'
+
+parameters:
+  Key:
+    name: key
+    description: The key for a given entry
+    in: path
+    type: string
+    required: true
+    minLength: 1
+
+responses:
+  ErrorNotFound:
+    description: The entry was not found
+    schema:
+      $ref: '#/definitions/Error'
+  ErrorResponse:
+    description: Error
+    schema:
+      $ref: '#/definitions/Error'
+
+definitions:
+  
+  KeyValue:
+    type: object
+    properties:
+      key:
+        type: string
+        description: The key
+      value:
+        type: integer
+        format: int64
+        description: The value
+  
+  Error:
+    description: |
+      the error model is a model for all the error responses coming from kvstore
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      code:
+        type: integer
+        format: int64
+        description: The error code
+      message:
+        description: The error message
+        type: string
+      helpUrl:
+        description: link to help page explaining the error in more detail
+        type: string
+        format: uri
+      cause:
+        $ref: '#/definitions/Error'
