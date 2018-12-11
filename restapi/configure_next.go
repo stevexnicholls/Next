@@ -16,7 +16,7 @@ import (
 
 	"github.com/stevexnicholls/next/restapi/operations"
 	"github.com/stevexnicholls/next/restapi/operations/backup"
-	"github.com/stevexnicholls/next/restapi/operations/healthcheck"
+	"github.com/stevexnicholls/next/restapi/operations/health"
 	"github.com/stevexnicholls/next/restapi/operations/kv"
 
 	models "github.com/stevexnicholls/next/models"
@@ -33,11 +33,11 @@ type BackupAPI interface {
 	BackupGet(ctx context.Context, params backup.BackupGetParams) middleware.Responder
 }
 
-//go:generate mockery -name HealthcheckAPI -inpkg
+//go:generate mockery -name HealthAPI -inpkg
 
-// HealthcheckAPI
-type HealthcheckAPI interface {
-	GetHealth(ctx context.Context, params healthcheck.GetHealthParams) middleware.Responder
+// HealthAPI
+type HealthAPI interface {
+	GetHealth(ctx context.Context, params health.GetHealthParams) middleware.Responder
 }
 
 //go:generate mockery -name KvAPI -inpkg
@@ -54,7 +54,7 @@ type KvAPI interface {
 // Config is configuration for Handler
 type Config struct {
 	BackupAPI
-	HealthcheckAPI
+	HealthAPI
 	KvAPI
 	Logger func(string, ...interface{})
 	// InnerMiddleware is for the handler executors. These do not apply to the swagger.json document.
@@ -96,10 +96,10 @@ func Handler(c Config) (http.Handler, error) {
 		ctx = storeAuth(ctx, principal)
 		return c.BackupAPI.BackupGet(ctx, params)
 	})
-	api.HealthcheckGetHealthHandler = healthcheck.GetHealthHandlerFunc(func(params healthcheck.GetHealthParams, principal interface{}) middleware.Responder {
+	api.HealthGetHealthHandler = health.GetHealthHandlerFunc(func(params health.GetHealthParams, principal interface{}) middleware.Responder {
 		ctx := params.HTTPRequest.Context()
 		ctx = storeAuth(ctx, principal)
-		return c.HealthcheckAPI.GetHealth(ctx, params)
+		return c.HealthAPI.GetHealth(ctx, params)
 	})
 	api.KvKeyDeleteHandler = kv.KeyDeleteHandlerFunc(func(params kv.KeyDeleteParams, principal interface{}) middleware.Responder {
 		ctx := params.HTTPRequest.Context()
