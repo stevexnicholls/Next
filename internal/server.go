@@ -72,7 +72,7 @@ func (srv *Server) Start() {
 			panic(err)
 		}
 	}()
-	log.Infof("Listening on %s\n", srv.srv.Addr)
+	log.Infof("Listening on %s", srv.srv.Addr)
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
