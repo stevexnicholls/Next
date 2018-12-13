@@ -63,7 +63,7 @@ func init() {
 	viper.BindPFlag("api_key", serveCmd.PersistentFlags().Lookup("api_key"))
 
 	viper.SetDefault("port", "localhost:3000")
-	viper.SetDefault("db_path", "./data.db")
+	viper.SetDefault("db_path", "data.db")
 	viper.SetDefault("db_bucket", "bucket")
 	viper.SetDefault("api_key", "")
 	viper.SetDefault("log_file", "next.log")

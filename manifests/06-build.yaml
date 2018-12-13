@@ -1,0 +1,40 @@
+---
+kind: List
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: "BuildConfig"
+  metadata:
+    name: "next-build" 
+  spec:
+    runPolicy: "Serial" 
+    triggers:
+      - type: Generic
+        generic:
+          secretReference:
+            name: webhooksecret
+      - type: ConfigChange
+    source: 
+      git:
+        ref: master
+        uri: https://github.com/stevexnicholls/next
+    strategy: 
+      dockerStrategy:
+        noCache: true
+    output: 
+      to:
+        kind: ImageStreamTag
+        name: next:latest
+- apiVersion: build.openshift.io/v1
+  kind: "BuildConfig"
+  metadata:
+    name: "next-build-pipeline" 
+  spec:
+    source: 
+      git:
+        ref: master
+        uri: https://github.com/stevexnicholls/next
+    strategy: 
+      jenkinsPipelineStrategy:
+        jenkinsfilePath: Jenkinsfile
+      type: JenkinsPipeline

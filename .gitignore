@@ -16,3 +16,5 @@
 next
 *.db
 *.log
+persistent/data/*
+persistent/logs/*

@@ -1,0 +1,10 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: next
+spec:
+  to:
+    name: next
+  tls:
+    termination: Reencrypt
