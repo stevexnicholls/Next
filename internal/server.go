@@ -72,17 +72,24 @@ func (srv *Server) Start() {
 			panic(err)
 		}
 	}()
-	log.Infof("Listening on %s", srv.srv.Addr)
-
+	log.Infof("listening on %s", srv.srv.Addr)
+	
+	if viper.Get("log_level") == "debug" {
+		log.Infof("database path: %s", viper.Get("db_path"))
+		log.Infof("database bucket: %s", viper.Get("db_bucket"))
+		log.Infof("api key: %s", viper.Get("api_key"))
+		log.Infof("log file path: %s", viper.Get("log_file"))	
+	}
+	
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	sig := <-quit
-	log.Infof("Shutting down server... Reason: %s", sig)
+	log.Infof("shutting down server... reason: %s", sig)
 	// teardown logic...
 
 	if err := srv.srv.Shutdown(context.Background()); err != nil {
 		panic(err)
 	}
 	srv.rt.Close()
-	log.Info("Server gracefully stopped")
+	log.Info("server gracefully stopped")
 }
