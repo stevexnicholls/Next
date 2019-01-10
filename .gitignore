@@ -14,10 +14,8 @@
 ***.DS_Store
 
 next
-*.db
+*.store
 *.log
-persistent/data/*
-persistent/logs/*
 tls.crt
 tls.key
 next.*

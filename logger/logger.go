@@ -21,7 +21,7 @@ func init() {
 func Setup() error {
 	Logger.SetLevel(logrus.InfoLevel)
 	// Set up logging to a file if specified in the config
-	logFile := viper.GetString("log_file")
+	logFile := viper.GetString("log_path")
 
 	if logFile != "" {
 		f, err := os.OpenFile(logFile, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)

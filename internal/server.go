@@ -80,10 +80,10 @@ func (srv *Server) Start() {
 	log.Infof("listening on %s", srv.srv.Addr)
 	
 	if viper.Get("log_level") == "debug" {
-		log.Infof("keystore path: %s", viper.Get("keystore_path"))
-		log.Infof("keystore bucket: %s", viper.Get("keystore_bucket"))
+		log.Infof("keystore path: %s", viper.Get("store_path"))
+		log.Infof("keystore bucket: %s", viper.Get("store_bucket"))
 		log.Infof("api key: %s", viper.Get("api_key"))
-		log.Infof("log file path: %s", viper.Get("log_file"))	
+		log.Infof("log path: %s", viper.Get("log_path"))	
 	}
 	
 	quit := make(chan os.Signal)

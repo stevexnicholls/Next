@@ -33,7 +33,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfgFile, logLevel string
+var cfgFile, logLevel, logPath string
 
 // RootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -61,10 +61,16 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.next.yaml)")
 	rootCmd.PersistentFlags().StringVar(&logLevel, "log_level", "", "log level: none, normal, debug (default is normal)")
+	rootCmd.PersistentFlags().StringVar(&logPath, "log_path", "", "path to log file")
+
 	viper.BindPFlag("log_level", rootCmd.PersistentFlags().Lookup("log_level"))
+	viper.BindPFlag("log_path", rootCmd.PersistentFlags().Lookup("log_path"))
+
 	viper.SetDefault("log_level", "normal")
+	viper.SetDefault("log_path", "next.log")
 }
 
 // initConfig reads in config file and ENV variables if set.

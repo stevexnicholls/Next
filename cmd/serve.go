@@ -56,7 +56,7 @@ func init() {
 	serveCmd.PersistentFlags().StringVar(&tlsCertPath, "tls_cert", "", "path to tls certificate")
 	serveCmd.PersistentFlags().StringVar(&tlsKeyPath, "tls_key", "", "path to tls private key")
 	serveCmd.PersistentFlags().StringVar(&storePath, "store_path", "next.store", "path to keystore")
-	serveCmd.PersistentFlags().StringVar(&storeBucket, "store_bucket", "key", "name of bucket in keystore")
+	serveCmd.PersistentFlags().StringVar(&storeBucket, "store_bucket", "keys", "name of bucket in keystore")
 	serveCmd.PersistentFlags().StringVar(&apiKey, "api_key", "", "api key")
 
 	viper.BindPFlag("port", serveCmd.PersistentFlags().Lookup("port"))
@@ -72,10 +72,9 @@ func init() {
 	viper.SetDefault("port", "localhost:3000")
 	viper.SetDefault("tls_cert", "")
 	viper.SetDefault("tls_key", "")
-	viper.SetDefault("store_path", "data.db")
-	viper.SetDefault("store_bucket", "bucket")
+	viper.SetDefault("store_path", "next/store")
+	viper.SetDefault("store_bucket", "keys")
 	viper.SetDefault("api_key", "")
-	viper.SetDefault("log_path", "next.log")
 
 	err := log.Setup()
 	if err != nil {
