@@ -25,7 +25,8 @@ func init() {
     "application/json"
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "swagger": "2.0",
   "info": {
@@ -257,7 +258,7 @@ func init() {
   "securityDefinitions": {
     "token": {
       "type": "apiKey",
-      "name": "x-api-key",
+      "name": "X-API-Key",
       "in": "header"
     }
   },
@@ -289,7 +290,8 @@ func init() {
     "application/json"
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "swagger": "2.0",
   "info": {
@@ -556,7 +558,7 @@ func init() {
   "securityDefinitions": {
     "token": {
       "type": "apiKey",
-      "name": "x-api-key",
+      "name": "X-API-Key",
       "in": "header"
     }
   },

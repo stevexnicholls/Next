@@ -61,9 +61,9 @@ func NewNextAPI(spec *loads.Document) *NextAPI {
 			return middleware.NotImplemented("operation KvValueUpdate has not yet been implemented")
 		}),
 
-		// Applies when the "x-api-key" header is set
+		// Applies when the "X-API-Key" header is set
 		TokenAuth: func(token string) (interface{}, error) {
-			return nil, errors.NotImplemented("api key auth (token) x-api-key from header param [x-api-key] has not yet been implemented")
+			return nil, errors.NotImplemented("api key auth (token) X-API-Key from header param [X-API-Key] has not yet been implemented")
 		},
 
 		// default authorizer is authorized meaning no requests are blocked
@@ -102,7 +102,7 @@ type NextAPI struct {
 	BinProducer runtime.Producer
 
 	// TokenAuth registers a function that takes a token and returns a principal
-	// it performs authentication based on an api key x-api-key provided in the header
+	// it performs authentication based on an api key X-API-Key provided in the header
 	TokenAuth func(string) (interface{}, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal

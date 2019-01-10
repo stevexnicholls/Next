@@ -37,7 +37,7 @@ func (k *Kv) ValueGet(ctx context.Context, params kv.ValueGetParams) middleware.
 		return kv.NewValueGetDefault(0).WithPayload(modelsError(err))
 	}
 
-	log.Infof("Get key: %v value: %v", key, c.Value)
+	log.Infof("get key: %v value: %v", key, c.Value)
 
 	return kv.NewValueGetOK().WithPayload(c)
 }

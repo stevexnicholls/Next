@@ -7,6 +7,7 @@ Next is a simple single node store for retrieving key/value information
 
     Schemes:
       http
+      https
     Host: localhost
     BasePath: /api
     Version: 0.1.0

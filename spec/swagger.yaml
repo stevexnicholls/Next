@@ -10,7 +10,9 @@ info:
   title: Next
   version: 0.1.0
 
-schemes: [http]
+schemes: 
+  - http
+  - https
 produces: [application/json]
 consumes: [application/json]
 basePath: /api
@@ -27,7 +29,7 @@ securityDefinitions:
   token:
     type: apiKey
     in: header
-    name: x-api-key
+    name:  X-API-Key
 
 security:
   - token: []
