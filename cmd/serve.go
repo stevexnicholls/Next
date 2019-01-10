@@ -32,7 +32,7 @@ import (
 )
 
 var author string
-var port, storePath, storeBucket, apiKey string
+var port, tlsCertPath, tlsKeyPath, storePath, storeBucket, apiKey string
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
@@ -53,20 +53,29 @@ func init() {
 	rootCmd.AddCommand(serveCmd)
 
 	serveCmd.PersistentFlags().StringVarP(&port, "port", "p", "localhost:3000", "port to listen on")
-	serveCmd.PersistentFlags().StringVar(&storePath, "db_path", "", "path to store db file")
-	serveCmd.PersistentFlags().StringVar(&storeBucket, "db_bucket", "", "name of bucket in db")
+	serveCmd.PersistentFlags().StringVar(&tlsCertPath, "tls_cert", "", "path to tls certificate")
+	serveCmd.PersistentFlags().StringVar(&tlsKeyPath, "tls_key", "", "path to tls private key")
+	serveCmd.PersistentFlags().StringVar(&storePath, "store_path", "next.store", "path to keystore")
+	serveCmd.PersistentFlags().StringVar(&storeBucket, "store_bucket", "key", "name of bucket in keystore")
 	serveCmd.PersistentFlags().StringVar(&apiKey, "api_key", "", "api key")
 
 	viper.BindPFlag("port", serveCmd.PersistentFlags().Lookup("port"))
-	viper.BindPFlag("db_path", serveCmd.PersistentFlags().Lookup("db_path"))
-	viper.BindPFlag("db_bucket", serveCmd.PersistentFlags().Lookup("db_bucket"))
+	viper.BindPFlag("tls_cert", serveCmd.PersistentFlags().Lookup("tls_cert"))
+	viper.BindPFlag("tls_key", serveCmd.PersistentFlags().Lookup("tls_key"))
+	viper.BindPFlag("store_path", serveCmd.PersistentFlags().Lookup("store_path"))
+	viper.BindPFlag("store_bucket", serveCmd.PersistentFlags().Lookup("store_bucket"))
 	viper.BindPFlag("api_key", serveCmd.PersistentFlags().Lookup("api_key"))
 
+	serveCmd.MarkPersistentFlagRequired("tls_cert")
+	serveCmd.MarkPersistentFlagRequired("tls_key")
+
 	viper.SetDefault("port", "localhost:3000")
-	viper.SetDefault("db_path", "data.db")
-	viper.SetDefault("db_bucket", "bucket")
+	viper.SetDefault("tls_cert", "")
+	viper.SetDefault("tls_key", "")
+	viper.SetDefault("store_path", "data.db")
+	viper.SetDefault("store_bucket", "bucket")
 	viper.SetDefault("api_key", "")
-	viper.SetDefault("log_file", "next.log")
+	viper.SetDefault("log_path", "next.log")
 
 	err := log.Setup()
 	if err != nil {

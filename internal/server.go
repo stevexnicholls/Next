@@ -67,16 +67,21 @@ func NewServer() (*Server, error) {
 // Start runs ListenAndServe on the http.Server with graceful shutdown.
 func (srv *Server) Start() {
 	log.Info("starting server...")
+
+	cert := viper.GetString("tls_cert")
+	key := viper.GetString("tls_key")
+
 	go func() {
-		if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
+		//if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
+		if err := srv.srv.ListenAndServeTLS(cert, key); err != http.ErrServerClosed {
 			panic(err)
 		}
 	}()
 	log.Infof("listening on %s", srv.srv.Addr)
 	
 	if viper.Get("log_level") == "debug" {
-		log.Infof("database path: %s", viper.Get("db_path"))
-		log.Infof("database bucket: %s", viper.Get("db_bucket"))
+		log.Infof("keystore path: %s", viper.Get("keystore_path"))
+		log.Infof("keystore bucket: %s", viper.Get("keystore_bucket"))
 		log.Infof("api key: %s", viper.Get("api_key"))
 		log.Infof("log file path: %s", viper.Get("log_file"))	
 	}

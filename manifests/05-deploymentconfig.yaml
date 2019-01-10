@@ -32,8 +32,8 @@ spec:
               name: "public"
           args:
           - --port=:3000
-          - --db_path=/persistent/next.db
-          - --db_bucket=keys
+          - --store_path=/persistent/next.db
+          - --store_bucket=keys
           env:
           - name: API_KEY
             valueFrom:

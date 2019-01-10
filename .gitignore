@@ -18,3 +18,6 @@ next
 *.log
 persistent/data/*
 persistent/logs/*
+tls.crt
+tls.key
+next.*

@@ -11,7 +11,6 @@ info:
   version: 0.1.0
 
 schemes: 
-  - http
   - https
 produces: [application/json]
 consumes: [application/json]
