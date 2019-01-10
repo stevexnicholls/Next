@@ -21,6 +21,11 @@ const BackupGetOKCode int = 200
 swagger:response backupGetOK
 */
 type BackupGetOK struct {
+
+	/*
+	  In: Body
+	*/
+	Payload models.Backup `json:"body,omitempty"`
 }
 
 // NewBackupGetOK creates BackupGetOK with default headers values
@@ -29,12 +34,26 @@ func NewBackupGetOK() *BackupGetOK {
 	return &BackupGetOK{}
 }
 
+// WithPayload adds the payload to the backup get o k response
+func (o *BackupGetOK) WithPayload(payload models.Backup) *BackupGetOK {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the backup get o k response
+func (o *BackupGetOK) SetPayload(payload models.Backup) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *BackupGetOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(200)
+	payload := o.Payload
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
+	}
+
 }
 
 // BackupGetNotFoundCode is the HTTP code returned for type BackupGetNotFound

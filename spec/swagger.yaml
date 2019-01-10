@@ -12,6 +12,7 @@ info:
 
 schemes: 
   - https
+  - http
 produces: [application/json]
 consumes: [application/json]
 basePath: /api
@@ -217,7 +218,7 @@ definitions:
     
   Backup:
     type: string
-    format: binary
+    format: byte
 
   Error:
     description: |

@@ -32,12 +32,12 @@ func NewServer() (*Server, error) {
 	}
 
 	k := kv.New(rt)
-	b := backup.Backup{}
+	b := backup.New(rt)
 
 	// Initiate the http handler, with the objects that are implementing the business logic.
 	h, err := restapi.Handler(restapi.Config{
 		KvAPI:      k,
-		BackupAPI:  &b,
+		BackupAPI:  b,
 		AuthToken:  auth.Token,
 		Authorizer: auth.Request,
 		Logger:     log.Infof,

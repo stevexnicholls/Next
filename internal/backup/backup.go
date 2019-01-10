@@ -2,20 +2,23 @@ package backup
 
 import (
 	"context"
+	"encoding/binary"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
 	"github.com/stevexnicholls/next/internal/runtime"
 	"github.com/stevexnicholls/next/persist"
-	"github.com/stevexnicholls/next/restapi/operations/backup"
 	log "github.com/stevexnicholls/next/logger"
+	"github.com/stevexnicholls/next/restapi/operations/backup"
 )
 
-type Backup struct{
+// curl --header "x-api-key: " http://localhost:3000/api/v1alpha/backup -o backup.store
+
+type Backup struct {
 	rt *next.Runtime
 }
 
-// New returns a new Kv struct
+// New returns a new Backup struct
 func New(rt *next.Runtime) *Backup {
 	return &Backup{rt: rt}
 }
@@ -34,4 +37,11 @@ func (b *Backup) BackupGet(ctx context.Context, params backup.BackupGetParams) m
 	log.Infof("get backup")
 
 	return backup.NewBackupGetOK().WithPayload(c)
+}
+
+// Itob returns an 8-byte big endian representation of v.
+func Itob(v int64) []byte {
+	b := make([]byte, 8)
+	binary.BigEndian.PutUint64(b, uint64(v))
+	return b
 }

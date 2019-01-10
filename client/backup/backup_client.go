@@ -39,7 +39,7 @@ func (a *Client) BackupGet(params *BackupGetParams, authInfo runtime.ClientAuthI
 		PathPattern:        "/v1alpha/backup",
 		ProducesMediaTypes: []string{"application/octet-stream"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &BackupGetReader{formats: a.formats},
 		AuthInfo:           authInfo,
