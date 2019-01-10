@@ -52,8 +52,6 @@ var serveCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(serveCmd)
 
-	viper.AutomaticEnv()
-
 	serveCmd.PersistentFlags().StringVarP(&port, "port", "p", "localhost:3000", "port to listen on")
 	serveCmd.PersistentFlags().StringVar(&storePath, "db_path", "", "path to store db file")
 	serveCmd.PersistentFlags().StringVar(&storeBucket, "db_bucket", "", "name of bucket in db")
