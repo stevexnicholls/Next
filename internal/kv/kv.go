@@ -18,7 +18,7 @@ type Kv struct {
 	rt *next.Runtime
 }
 
-// New retursn a new Kv struct
+// New returns a new Kv struct
 func New(rt *next.Runtime) *Kv {
 	return &Kv{rt: rt}
 }

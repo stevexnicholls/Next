@@ -68,16 +68,23 @@ func NewServer() (*Server, error) {
 func (srv *Server) Start() {
 	log.Info("starting server...")
 
+	protocol := viper.GetString("protocol")
 	cert := viper.GetString("tls_cert")
 	key := viper.GetString("tls_key")
 
 	go func() {
-		//if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
-		if err := srv.srv.ListenAndServeTLS(cert, key); err != http.ErrServerClosed {
-			panic(err)
+		switch protocol {
+		case "http":
+			if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
+				panic(err)
+			}
+		case "https":
+			if err := srv.srv.ListenAndServeTLS(cert, key); err != http.ErrServerClosed {
+				panic(err)
+			}
 		}
 	}()
-	log.Infof("listening on %s", srv.srv.Addr)
+	log.Infof("listening on %s://%s", protocol, srv.srv.Addr)
 	
 	if viper.Get("log_level") == "debug" {
 		log.Infof("keystore path: %s", viper.Get("store_path"))

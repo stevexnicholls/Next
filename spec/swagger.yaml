@@ -176,6 +176,8 @@ paths:
       responses:
         200:
           description: Yay a backup
+          schema:
+            $ref: '#/definitions/Backup'
         404:
           $ref: '#/responses/ErrorNotFound'
         default:
@@ -212,7 +214,11 @@ definitions:
         type: integer
         format: int64
         description: The value
-  
+    
+  Backup:
+    type: string
+    format: binary
+
   Error:
     description: |
       the error model is a model for all the error responses coming from kvstore

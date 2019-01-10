@@ -32,7 +32,7 @@ import (
 )
 
 var author string
-var port, tlsCertPath, tlsKeyPath, storePath, storeBucket, apiKey string
+var port, protocol, tlsCertPath, tlsKeyPath, storePath, storeBucket, apiKey string
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
@@ -53,6 +53,7 @@ func init() {
 	rootCmd.AddCommand(serveCmd)
 
 	serveCmd.PersistentFlags().StringVarP(&port, "port", "p", "localhost:3000", "port to listen on")
+	serveCmd.PersistentFlags().StringVar(&protocol, "protocol", "http", "http or https")
 	serveCmd.PersistentFlags().StringVar(&tlsCertPath, "tls_cert", "", "path to tls certificate")
 	serveCmd.PersistentFlags().StringVar(&tlsKeyPath, "tls_key", "", "path to tls private key")
 	serveCmd.PersistentFlags().StringVar(&storePath, "store_path", "next.store", "path to keystore")
@@ -60,19 +61,21 @@ func init() {
 	serveCmd.PersistentFlags().StringVar(&apiKey, "api_key", "", "api key")
 
 	viper.BindPFlag("port", serveCmd.PersistentFlags().Lookup("port"))
+	viper.BindPFlag("protocol", serveCmd.PersistentFlags().Lookup("protocol"))
 	viper.BindPFlag("tls_cert", serveCmd.PersistentFlags().Lookup("tls_cert"))
 	viper.BindPFlag("tls_key", serveCmd.PersistentFlags().Lookup("tls_key"))
 	viper.BindPFlag("store_path", serveCmd.PersistentFlags().Lookup("store_path"))
 	viper.BindPFlag("store_bucket", serveCmd.PersistentFlags().Lookup("store_bucket"))
 	viper.BindPFlag("api_key", serveCmd.PersistentFlags().Lookup("api_key"))
 
-	serveCmd.MarkPersistentFlagRequired("tls_cert")
-	serveCmd.MarkPersistentFlagRequired("tls_key")
+	// serveCmd.MarkPersistentFlagRequired("tls_cert")
+	// serveCmd.MarkPersistentFlagRequired("tls_key")
 
 	viper.SetDefault("port", "localhost:3000")
+	viper.SetDefault("protocol", "http")
 	viper.SetDefault("tls_cert", "")
 	viper.SetDefault("tls_key", "")
-	viper.SetDefault("store_path", "next/store")
+	viper.SetDefault("store_path", "next.store")
 	viper.SetDefault("store_bucket", "keys")
 	viper.SetDefault("api_key", "")
 
