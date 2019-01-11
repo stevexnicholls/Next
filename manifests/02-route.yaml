@@ -7,4 +7,4 @@ spec:
   to:
     name: next
   tls:
-    termination: Reencrypt
+    termination: Edge
