@@ -45,8 +45,8 @@ func NewNextAPI(spec *loads.Document) *NextAPI {
 		BackupBackupGetHandler: backup.BackupGetHandlerFunc(func(params backup.BackupGetParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation BackupBackupGet has not yet been implemented")
 		}),
-		HealthGetHealthHandler: health.GetHealthHandlerFunc(func(params health.GetHealthParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation HealthGetHealth has not yet been implemented")
+		HealthHealthGetHandler: health.HealthGetHandlerFunc(func(params health.HealthGetParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation HealthHealthGet has not yet been implemented")
 		}),
 		KvKeyDeleteHandler: kv.KeyDeleteHandlerFunc(func(params kv.KeyDeleteParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation KvKeyDelete has not yet been implemented")
@@ -61,9 +61,9 @@ func NewNextAPI(spec *loads.Document) *NextAPI {
 			return middleware.NotImplemented("operation KvValueUpdate has not yet been implemented")
 		}),
 
-		// Applies when the "x-api-key" header is set
+		// Applies when the "X-API-Key" header is set
 		TokenAuth: func(token string) (interface{}, error) {
-			return nil, errors.NotImplemented("api key auth (token) x-api-key from header param [x-api-key] has not yet been implemented")
+			return nil, errors.NotImplemented("api key auth (token) X-API-Key from header param [X-API-Key] has not yet been implemented")
 		},
 
 		// default authorizer is authorized meaning no requests are blocked
@@ -102,7 +102,7 @@ type NextAPI struct {
 	BinProducer runtime.Producer
 
 	// TokenAuth registers a function that takes a token and returns a principal
-	// it performs authentication based on an api key x-api-key provided in the header
+	// it performs authentication based on an api key X-API-Key provided in the header
 	TokenAuth func(string) (interface{}, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
@@ -110,8 +110,8 @@ type NextAPI struct {
 
 	// BackupBackupGetHandler sets the operation handler for the backup get operation
 	BackupBackupGetHandler backup.BackupGetHandler
-	// HealthGetHealthHandler sets the operation handler for the get health operation
-	HealthGetHealthHandler health.GetHealthHandler
+	// HealthHealthGetHandler sets the operation handler for the health get operation
+	HealthHealthGetHandler health.HealthGetHandler
 	// KvKeyDeleteHandler sets the operation handler for the key delete operation
 	KvKeyDeleteHandler kv.KeyDeleteHandler
 	// KvKeyListHandler sets the operation handler for the key list operation
@@ -195,8 +195,8 @@ func (o *NextAPI) Validate() error {
 		unregistered = append(unregistered, "backup.BackupGetHandler")
 	}
 
-	if o.HealthGetHealthHandler == nil {
-		unregistered = append(unregistered, "health.GetHealthHandler")
+	if o.HealthHealthGetHandler == nil {
+		unregistered = append(unregistered, "health.HealthGetHandler")
 	}
 
 	if o.KvKeyDeleteHandler == nil {
@@ -334,7 +334,7 @@ func (o *NextAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/health"] = health.NewGetHealth(o.context, o.HealthGetHealthHandler)
+	o.handlers["GET"]["/health"] = health.NewHealthGet(o.context, o.HealthHealthGetHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)

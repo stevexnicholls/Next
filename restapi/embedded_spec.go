@@ -25,6 +25,7 @@ func init() {
     "application/json"
   ],
   "schemes": [
+    "https",
     "http"
   ],
   "swagger": "2.0",
@@ -45,9 +46,11 @@ func init() {
   "paths": {
     "/health": {
       "get": {
+        "description": "get service health",
         "tags": [
           "health"
         ],
+        "operationId": "HealthGet",
         "responses": {
           "200": {
             "description": "confirm that the service is healthy"
@@ -73,7 +76,10 @@ func init() {
         "operationId": "BackupGet",
         "responses": {
           "200": {
-            "description": "Yay a backup"
+            "description": "Yay a backup",
+            "schema": {
+              "$ref": "#/definitions/Backup"
+            }
           },
           "404": {
             "$ref": "#/responses/ErrorNotFound"
@@ -186,6 +192,10 @@ func init() {
     }
   },
   "definitions": {
+    "Backup": {
+      "type": "string",
+      "format": "byte"
+    },
     "Error": {
       "description": "the error model is a model for all the error responses coming from kvstore\n",
       "type": "object",
@@ -255,7 +265,7 @@ func init() {
   "securityDefinitions": {
     "token": {
       "type": "apiKey",
-      "name": "x-api-key",
+      "name": "X-API-Key",
       "in": "header"
     }
   },
@@ -287,6 +297,7 @@ func init() {
     "application/json"
   ],
   "schemes": [
+    "https",
     "http"
   ],
   "swagger": "2.0",
@@ -307,9 +318,11 @@ func init() {
   "paths": {
     "/health": {
       "get": {
+        "description": "get service health",
         "tags": [
           "health"
         ],
+        "operationId": "HealthGet",
         "responses": {
           "200": {
             "description": "confirm that the service is healthy"
@@ -338,7 +351,10 @@ func init() {
         "operationId": "BackupGet",
         "responses": {
           "200": {
-            "description": "Yay a backup"
+            "description": "Yay a backup",
+            "schema": {
+              "$ref": "#/definitions/Backup"
+            }
           },
           "404": {
             "description": "The entry was not found",
@@ -483,6 +499,10 @@ func init() {
     }
   },
   "definitions": {
+    "Backup": {
+      "type": "string",
+      "format": "byte"
+    },
     "Error": {
       "description": "the error model is a model for all the error responses coming from kvstore\n",
       "type": "object",
@@ -552,7 +572,7 @@ func init() {
   "securityDefinitions": {
     "token": {
       "type": "apiKey",
-      "name": "x-api-key",
+      "name": "X-API-Key",
       "in": "header"
     }
   },

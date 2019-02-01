@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t stevexnicholls/next:v0.1 . -f Dockerfile
+docker build -t stevexnicholls/next:latest . -f Dockerfile

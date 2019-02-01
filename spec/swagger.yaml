@@ -10,7 +10,9 @@ info:
   title: Next
   version: 0.1.0
 
-schemes: [http]
+schemes: 
+  - https
+  - http
 produces: [application/json]
 consumes: [application/json]
 basePath: /api
@@ -27,7 +29,7 @@ securityDefinitions:
   token:
     type: apiKey
     in: header
-    name: x-api-key
+    name:  X-API-Key
 
 security:
   - token: []
@@ -37,6 +39,8 @@ paths:
 
     get:
       tags: [health]
+      description: get service health
+      operationId: HealthGet
       responses:
         200:
           description: "confirm that the service is healthy"
@@ -173,6 +177,8 @@ paths:
       responses:
         200:
           description: Yay a backup
+          schema:
+            $ref: '#/definitions/Backup'
         404:
           $ref: '#/responses/ErrorNotFound'
         default:
@@ -209,7 +215,11 @@ definitions:
         type: integer
         format: int64
         description: The value
-  
+    
+  Backup:
+    type: string
+    format: byte
+
   Error:
     description: |
       the error model is a model for all the error responses coming from kvstore

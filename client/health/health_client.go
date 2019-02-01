@@ -25,23 +25,23 @@ type Client struct {
 }
 
 /*
-GetHealth get health API
+HealthGet get service health
 */
-func (a *Client) GetHealth(params *GetHealthParams, authInfo runtime.ClientAuthInfoWriter) (*GetHealthOK, error) {
+func (a *Client) HealthGet(params *HealthGetParams, authInfo runtime.ClientAuthInfoWriter) (*HealthGetOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetHealthParams()
+		params = NewHealthGetParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetHealth",
+		ID:                 "HealthGet",
 		Method:             "GET",
 		PathPattern:        "/health",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetHealthReader{formats: a.formats},
+		Reader:             &HealthGetReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -49,7 +49,7 @@ func (a *Client) GetHealth(params *GetHealthParams, authInfo runtime.ClientAuthI
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetHealthOK), nil
+	return result.(*HealthGetOK), nil
 
 }
 

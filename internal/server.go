@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,6 +13,7 @@ import (
 	"github.com/stevexnicholls/next/internal/kv"
 	"github.com/stevexnicholls/next/internal/runtime"
 	"github.com/stevexnicholls/next/restapi"
+	log "github.com/stevexnicholls/next/logger"
 )
 
 // Server provides an http.Server.
@@ -24,23 +24,23 @@ type Server struct {
 
 // NewServer creates and configures an APIServer serving all application routes.
 func NewServer() (*Server, error) {
-	log.Println("configuring server...")
+	log.Info("configuring server...")
 
 	rt, err := next.NewRuntime()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
 
 	k := kv.New(rt)
-	b := backup.Backup{}
+	b := backup.New(rt)
 
 	// Initiate the http handler, with the objects that are implementing the business logic.
 	h, err := restapi.Handler(restapi.Config{
 		KvAPI:      k,
-		BackupAPI:  &b,
+		BackupAPI:  b,
 		AuthToken:  auth.Token,
 		Authorizer: auth.Request,
-		Logger:     log.Printf,
+		Logger:     log.Infof,
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -66,23 +66,42 @@ func NewServer() (*Server, error) {
 
 // Start runs ListenAndServe on the http.Server with graceful shutdown.
 func (srv *Server) Start() {
-	log.Println("starting server...")
+	log.Info("starting server...")
+
+	protocol := viper.GetString("protocol")
+	cert := viper.GetString("tls_cert")
+	key := viper.GetString("tls_key")
+
 	go func() {
-		if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
-			panic(err)
+		switch protocol {
+		case "http":
+			if err := srv.srv.ListenAndServe(); err != http.ErrServerClosed {
+				panic(err)
+			}
+		case "https":
+			if err := srv.srv.ListenAndServeTLS(cert, key); err != http.ErrServerClosed {
+				panic(err)
+			}
 		}
 	}()
-	log.Printf("Listening on %s\n", srv.srv.Addr)
-
+	log.Infof("listening on %s://%s", protocol, srv.srv.Addr)
+	
+	if viper.Get("log_level") == "debug" {
+		log.Infof("keystore path: %s", viper.Get("store_path"))
+		log.Infof("keystore bucket: %s", viper.Get("store_bucket"))
+		log.Infof("api key: %s", viper.Get("api_key"))
+		log.Infof("log path: %s", viper.Get("log_path"))	
+	}
+	
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	sig := <-quit
-	log.Println("Shutting down server... Reason:", sig)
+	log.Infof("shutting down server... reason: %s", sig)
 	// teardown logic...
 
 	if err := srv.srv.Shutdown(context.Background()); err != nil {
 		panic(err)
 	}
 	srv.rt.Close()
-	log.Println("Server gracefully stopped")
+	log.Info("server gracefully stopped")
 }

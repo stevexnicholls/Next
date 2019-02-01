@@ -15,3 +15,8 @@
 
 next
 *.db
+*.store
+*.log
+tls.crt
+tls.key
+next.*
