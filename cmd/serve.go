@@ -236,7 +236,7 @@ func init() {
 	serveCmd.PersistentFlags().StringVar(&protocol, "protocol", "http", "http or https")
 	serveCmd.PersistentFlags().StringVar(&tlsCertPath, "tls_cert", "", "path to tls certificate")
 	serveCmd.PersistentFlags().StringVar(&tlsKeyPath, "tls_key", "", "path to tls private key")
-	serveCmd.PersistentFlags().StringVar(&storePath, "store_path", "next.store", "path to keystore")
+	serveCmd.PersistentFlags().StringVar(&storePath, "store_path", "next.db", "path to keystore")
 	serveCmd.PersistentFlags().StringVar(&storeBucket, "store_bucket", "keys", "name of bucket in keystore")
 	serveCmd.PersistentFlags().StringVar(&apiKey, "api_key", "", "api key")
 
@@ -255,7 +255,7 @@ func init() {
 	viper.SetDefault("protocol", "http")
 	viper.SetDefault("tls_cert", "")
 	viper.SetDefault("tls_key", "")
-	viper.SetDefault("store_path", "next.store")
+	viper.SetDefault("store_path", "next.db")
 	viper.SetDefault("store_bucket", "keys")
 	viper.SetDefault("api_key", "")
 
