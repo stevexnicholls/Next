@@ -12,7 +12,7 @@ import (
 	"github.com/stevexnicholls/next/restapi/operations/backup"
 )
 
-// curl --header "x-api-key: " http://localhost:3000/api/v1alpha/backup -o backup.store
+// curl --header "x-api-key: " http://localhost:3000/api/v1alpha/backup -o backup.db
 
 type Backup struct {
 	rt *next.Runtime
