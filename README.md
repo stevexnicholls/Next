@@ -42,4 +42,4 @@ PRs accepted.
 
 ## License
 
-MIT © 2018 Steve Nicholls
+Apache 2.0 © 2018 Steve Nicholls
