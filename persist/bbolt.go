@@ -8,8 +8,8 @@ import (
 	"log"
 	"strconv"
 
+	bolt "github.com/etcd-io/bbolt"
 	"github.com/stevexnicholls/next/models"
-	bolt "go.etcd.io/bbolt"
 )
 
 // NewBoltStore creates a new store backed by bbolt db
