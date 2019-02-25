@@ -41,6 +41,7 @@ func UnsafeBytesToString(b []byte) string {
 type Store interface {
 	Update(*models.KeyValue) error
 	Get(string) (*models.KeyValue, error)
+	View() ([]*models.KeyValue, error)
 	Backup() ([]byte, error)
 	// FindByPrefix(string) ([]KeyValue, error)
 	// Delete(string) error

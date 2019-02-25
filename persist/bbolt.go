@@ -98,6 +98,23 @@ func (g *boltStore) Get(key string) (*models.KeyValue, error) {
 	return &models.KeyValue{Key: key, Value: int64(i)}, err
 }
 
+// Gets returns a value from the persistent store
+func (g *boltStore) View() ([]*models.KeyValue, error) {
+
+	var kv []*models.KeyValue
+	err := g.DB.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(g.Bucket)
+
+		b.ForEach(func(k, v []byte) error {
+			x, _ := strconv.Atoi(string(v))
+			kv = append(kv, &models.KeyValue{Key: string(k), Value: int64(x)})
+			return nil
+		})
+		return nil
+	})
+	return kv, err
+}
+
 // Backup returns a dump of the persistent store
 func (g *boltStore) Backup() ([]byte, error) {
 

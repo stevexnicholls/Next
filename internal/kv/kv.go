@@ -13,6 +13,7 @@ import (
 	log "github.com/stevexnicholls/next/logger"
 )
 
+// Kv key value struct 
 type Kv struct {
 	// data map[int64]*models.KeyValue
 	rt *next.Runtime
@@ -37,36 +38,54 @@ func (k *Kv) ValueGet(ctx context.Context, params kv.ValueGetParams) middleware.
 		return kv.NewValueGetDefault(0).WithPayload(modelsError(err))
 	}
 
-	log.Infof("get key: %v value: %v", key, c.Value)
+	log.Infof("get { key: %v, value: %v }", key, c.Value)
 
 	return kv.NewValueGetOK().WithPayload(c)
 }
 
+// ValueUpdate handles updating a key
 func (k *Kv) ValueUpdate(ctx context.Context, params kv.ValueUpdateParams) middleware.Responder {
 	keyvalue := params.Keyvalue
 
 	if err := k.rt.DB().Update(keyvalue); err != nil {
-		// if err == persist.ErrVersionMismatch {
-		// 	return kv.NewPutEntryConflict().WithXRequestID(rid).WithPayload(modelsError(err))
-		// }
+		log.Info(swag.String(err.Error()))
 		if err == persist.ErrGone {
-			return kv.NewValueUpdateNotFound() //NewUpdateValueGone() //.WithXRequestID(rid).WithPayload(modelsError(errors.New("entry was deleted")))
+			return kv.NewValueUpdateNotFound().WithPayload(modelsError(err))
 		}
 		if err == persist.ErrNotFound {
-			return kv.NewValueUpdateNotFound() //.WithXRequestID(rid).WithPayload(modelsError(err))
+			return kv.NewValueUpdateNotFound().WithPayload(modelsError(err))
 		}
-		return kv.NewValueUpdateDefault(0) //.NewPutEntryDefault(0).WithXRequestID(rid).WithPayload(modelsError(err))
+		return kv.NewValueUpdateDefault(500).WithPayload(modelsError(err))
 	}
+
+	log.Infof("update { key: %v, value: %v }", keyvalue.Key, keyvalue.Value)
 
 	return kv.NewValueUpdateCreated().WithPayload(keyvalue)
 }
 
+// KeyDelete handles deleting a key
 func (*Kv) KeyDelete(ctx context.Context, params kv.KeyDeleteParams) middleware.Responder {
-	panic("implement me")
+	return kv.NewKeyDeleteDefault(501)
 }
 
-func (*Kv) KeyList(cts context.Context, params kv.KeyListParams) middleware.Responder {
-	panic("implement me")
+// KeyList returns a full list of keys and values
+func (k *Kv) KeyList(ctx context.Context, params kv.KeyListParams) middleware.Responder {
+
+	c, err := k.rt.DB().View()
+
+	if err != nil {
+		log.Info(swag.String(err.Error()))
+		if err == persist.ErrNotFound {
+			return kv.NewKeyListDefault(500).WithPayload(modelsError(err))
+		}
+		return kv.NewKeyListDefault(500).WithPayload(modelsError(err))
+	}
+
+	for _, kv := range c {
+		log.Infof("list { key: %+v, value: %+v }", kv.Key, kv.Value)
+	}
+
+	return kv.NewKeyListOK().WithPayload(c)
 }
 
 func modelsError(err error) *models.Error {
