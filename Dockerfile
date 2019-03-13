@@ -7,7 +7,7 @@ WORKDIR /build
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o next .
 #FROM scratch
 #FROM centos:centos7
-FROM alpine:3.8
+FROM alpine:latest
 LABEL name="stevexnicholls/next" \
       maintainer="Steve Nicholls <stevexnicholls@gmail.com>" \
       vendor="Steve Nicholls" \
