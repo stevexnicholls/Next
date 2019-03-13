@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/spf13/viper"
+	log "github.com/stevexnicholls/next/logger"
 	"github.com/stevexnicholls/next/restapi"
 )
 

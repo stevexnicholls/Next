@@ -11,8 +11,8 @@ FROM alpine:3.8
 LABEL name="stevexnicholls/next" \
       maintainer="Steve Nicholls <stevexnicholls@gmail.com>" \
       vendor="Steve Nicholls" \
-      version="0.1" \
-      release="1" \
+      version="0.1.0" \
+      release="0.1.0" \
       summary="Next" \
       description="Next" \
 ### Required labels above - recommended below
@@ -38,7 +38,7 @@ RUN chgrp -R 0 /opt/next && \
     chmod -R g=u /opt/next
 USER 10001
 WORKDIR ${APP_ROOT}
-#ENTRYPOINT [ "uid_entrypoint" ]
+#ENTRYPOINT [ "uid_entrypoint.sh" ]
 ENTRYPOINT [ "next", "serve" ]
 #VOLUME ${APP_ROOT}/persistent
 #CMD ["serve"]
