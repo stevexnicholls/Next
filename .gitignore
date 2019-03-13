@@ -20,3 +20,4 @@ next
 tls.crt
 tls.key
 next.*
+*.code-workspace
