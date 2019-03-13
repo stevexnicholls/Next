@@ -13,15 +13,15 @@ LABEL name="stevexnicholls/next" \
       vendor="Steve Nicholls" \
       version="0.1" \
       release="1" \
-      summary="Next API" \
-      description="Next API" \
+      summary="Next" \
+      description="Next" \
 ### Required labels above - recommended below
       url="https://github.com/stevexnicholls/next" \
       run='docker run -tdi --name ${NAME} \
       -u 123456 \
       ${IMAGE}' \
-      io.k8s.description="Next API" \
-      io.k8s.display-name="Next API" \
+      io.k8s.description="Next" \
+      io.k8s.display-name="Next" \
       io.openshift.expose-services="" \
       io.openshift.tags="next"
 #centos:centos7 RUN yum -y update && yum clean all

@@ -27,10 +27,16 @@ func Token(token string) (interface{}, error) {
 	if t == "" {
 		user.ID = 1
 		user.Role = "admin"
+		if viper.Get("log_level") == "debug" {
+			log.Infof("no api key specified")
+		}
 		return &user, nil
 	}
 
 	if token == "" {
+		if viper.Get("log_level") == "debug" {
+			log.Infof("no api key provided with call")
+		}
 		return nil, nil // unauthorized
 	}
 
@@ -40,9 +46,15 @@ func Token(token string) (interface{}, error) {
 	if (token) == t {
 		user.ID = 1
 		user.Role = "admin"
+		if viper.Get("log_level") == "debug" {
+			log.Infof("admin authenticated")
+		}
 		return &user, nil
 	}
 
+	if viper.Get("log_level") == "debug" {
+		log.Infof("api key provided (%v) did not match", token)
+	}
 	return nil, nil
 }
 

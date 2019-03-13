@@ -2,6 +2,7 @@ module github.com/stevexnicholls/next
 
 require (
 	github.com/Stratoscale/swagger v1.0.21
+	github.com/etcd-io/bbolt v1.3.2
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-openapi/analysis v0.18.0 // indirect
 	github.com/go-openapi/errors v0.18.0
@@ -25,7 +26,6 @@ require (
 	github.com/tylerb/graceful v1.2.15 // indirect
 	github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 // indirect
 	github.com/vektra/mockery v0.0.0-20181123154057-e78b021dcbb5 // indirect
-	go.etcd.io/bbolt v1.3.0
 	golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc // indirect
 	golang.org/x/net v0.0.0-20190110044637-be1c187aa6c6
 	golang.org/x/sys v0.0.0-20190109145017-48ac38b7c8cb // indirect
